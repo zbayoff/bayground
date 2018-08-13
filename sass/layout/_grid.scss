@@ -1,0 +1,68 @@
+.bayground-container {
+    padding-bottom: 150px;
+}
+
+/*---------The Bayground---------*/
+
+.container-bayground-projects__header {
+    text-align: center;
+}
+
+.container-bayground-projects__info {
+    text-align: center;
+}
+
+.container-bayground-projects .row {
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: white;
+    box-shadow: 4px 10px 8px;
+}
+
+.container-modules {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.module-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    margin: .5rem;
+}
+
+.module-item:hover {
+    cursor: pointer;
+}
+
+
+.what-i-learned__link {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.what-i-learned__body {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1rem;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+

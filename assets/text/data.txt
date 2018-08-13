@@ -1,0 +1,6 @@
+mark johns	waffle iron	80	2
+mark johns	blender	200	1
+mark johns	knife	10 	4
+zach bayoff	waffle iron	80	1
+zach bayoff	knife	10 	2
+zach bayoff	pot	20	3

@@ -1,0 +1,163 @@
+/*-------Concentrate Yo -------*/
+
+.project-concentrateYo__grid-container {
+    display: grid;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    justify-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    margin: 1rem auto 1rem auto;
+    .imgTile-container {
+        position: relative;
+        height: 100%;
+        width: $tile-size;
+        margin: 0rem;
+        padding-bottom: 100%;
+        @media screen and (max-width: 900px) {
+            min-width: initial;
+        }
+        div {
+            height: 100%;
+        }
+    }
+    p {
+        height: 100%;
+
+
+        &.closed {
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            background-color: #888;
+            opacity: 1;
+            height: 100%;
+            width: $tile-size;
+            z-index: 1;
+            -webkit-transition: background-color 0.5s;
+            -o-transition: background-color 0.5s;
+            transition: background-color 0.5s;
+        }
+        &.open {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            height: $tile-size;
+            width: $tile-size;
+            z-index: 1;
+            -webkit-transition: background-color 0.5s;
+            -o-transition: background-color 0.5s;
+            transition: background-color 0.5s;
+        }
+        &.done {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            height: $tile-size;
+            width: $tile-size;
+            z-index: 1;
+        }
+        &.done+img {
+            -webkit-animation: tileDone 0.5s ease-in-out;
+            animation: tileDone 0.5s ease-in-out;
+        }
+    }
+    img {
+        display: block;
+        position: absolute;
+        width: $tile-size;
+        height: auto;
+        border: 2px solid black;
+        top: 0px;
+        bottom: 0px;
+        right: 0px;
+        left: 0px; // display: inline-block;
+        //     width: 100%;
+        //     top: 0px;
+        //     bottom: 0px;
+        //     right: 0px;
+        //     left: 0px;
+        //     height: 100%;
+        //     border: 2px solid black;
+    }
+}
+
+@-webkit-keyframes tileDone {
+    50% {
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes tileDone {
+    50% {
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.form-input-inline {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+}
+
+.form-label {
+    // display: block;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.button {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.project-concentrateYo__grid-error {
+    color: red;
+}
