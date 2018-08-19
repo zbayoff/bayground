@@ -557,6 +557,17 @@ template {
   /*  font-family: 'Helvetica', sans-serif;*/
 }
 
+.project-link {
+  text-align: center;
+}
+
+.project-link a {
+  display: inline-block;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: black;
+}
+
 .bayground-container {
   padding-bottom: 150px;
 }
@@ -601,8 +612,9 @@ template {
           align-items: center;
   -ms-flex-line-pack: center;
       align-content: center;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
+  max-width: 1000px;
 }
 
 .module-item {
@@ -617,8 +629,8 @@ template {
           align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   border: 2px solid black;
   margin: .5rem;
 }
