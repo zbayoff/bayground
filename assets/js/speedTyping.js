@@ -19,11 +19,11 @@
     let elapsed = 0;
     let timerFired = false;
     let testComplete = false;
-    let typingArea = document.getElementById("project-speedType__textarea");
-    let tryAgainBtn = document.getElementById("project-speedType__tryagain-btn");
-    let diffPromptBtn = document.getElementById("project-speedType__diffprompt-btn");
-    let speedtestSpanClose = document.getElementById("project-speedTest__span-close");
-    let timerPara = document.getElementById("project-speedType__timer");
+    let typingArea = document.querySelector(".project-speedType__textarea");
+    let tryAgainBtn = document.querySelector(".project-speedType__tryagain-btn");
+    let diffPromptBtn = document.querySelector(".project-speedType__diffprompt-btn");
+    let speedtestSpanClose = document.querySelector(".project-speedTest__span-close");
+    let timerPara = document.querySelector(".project-speedType__timer");
 
     // Read in text file of prompts.
     //readTextFile("http://localhost/portfolio/bayground/assets/text/speedTestPrompts.txt");
@@ -72,13 +72,13 @@
 
     function displayPrompt(promptText) {
         let promptArray = promptText.split("\n");
-        let promptPara = document.getElementById("project-speedTest__prompt");
+        let promptPara = document.querySelector(".project-speedTest__prompt");
         let randPrompt = promptArray[Math.floor(Math.random() * promptArray.length)];
         promptPara.innerHTML = randPrompt;
     }
 
     function checkString() {
-        let promptPara = document.getElementById("project-speedTest__prompt");
+        let promptPara = document.querySelector(".project-speedTest__prompt");
 
         if (typingArea.value !== promptPara.innerText.slice(0, typingArea.value.length)) {
             typingArea.style.border = "5px solid red";
@@ -138,8 +138,8 @@
     }
 
     function clearFields() {
-        let resultWPM = document.getElementById("project-speedType__result-WPM");
-        let resultBlurb = document.getElementById("project-speedType__result-blurb");
+        let resultWPM = document.querySelector(".project-speedType__result-WPM");
+        let resultBlurb = document.querySelector(".project-speedType__result-blurb");
 
         resultWPM.innerHTML = "";
         resultBlurb.innerHTML = "";
@@ -154,9 +154,9 @@
 
     function displayResult() {
 
-        let resultWPM = document.getElementById("project-speedType__result-WPM");
-        let resultBlurb = document.getElementById("project-speedType__result-blurb");
-        let promptPara = document.getElementById("project-speedTest__prompt");
+        let resultWPM = document.querySelector(".project-speedType__result-WPM");
+        let resultBlurb = document.querySelector(".project-speedType__result-blurb");
+        let promptPara = document.querySelector(".project-speedTest__prompt");
 
         let numWords = (promptPara.innerText).split(" ").length;
 

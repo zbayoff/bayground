@@ -1,15 +1,15 @@
 (function () {
 
-    const createGridBtn = document.getElementById('project-concentrateYo__createGrid-btn');
-    const modalContainer = document.getElementById('modal-container__project-concentrateYo');
-    const modalColumn = document.getElementById('');
-    const gridSizeInput = document.getElementById('project-concentrateYo__gridSizeInput');
-    const gridContainer = document.querySelector('.project-concentrateYo__grid-container');
-    const resultAccuracy = document.getElementById('project-concentrateYo__result-accuracy');
-    const resultBlurb = document.getElementById('project-concentrateYo__result-blurb');
-    const playAgainBtn = document.getElementById("project-concentrateYo__playagain-btn");
-    const spanClose = document.getElementById("project-concentrateYo__span-close");
-    const timerPara = document.getElementById("project-concentrateYo__timer");
+    const createGridBtn = document.querySelector(".project-concentrateYo__createGrid-btn");
+    const modalContainer = document.querySelector(".modal-container__project-concentrateYo");
+    // const modalColumn = document.querySelector(".');
+    const gridSizeInput = document.querySelector(".project-concentrateYo__gridSizeInput");
+    const gridContainer = document.querySelector(".project-concentrateYo__grid-container");
+    const resultAccuracy = document.querySelector(".project-concentrateYo__result-accuracy");
+    const resultBlurb = document.querySelector(".project-concentrateYo__result-blurb");
+    const playAgainBtn = document.querySelector(".project-concentrateYo__playagain-btn");
+    const spanClose = document.querySelector(".project-concentrateYo__span-close");
+    const timerPara = document.querySelector(".project-concentrateYo__timer");
     const gridError = document.querySelector('.project-concentrateYo__grid-error');
 
     let prevTile;

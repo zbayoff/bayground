@@ -63,10 +63,10 @@ function findPrimes(num1, num2) {
     return "<p>" + primes.join(", ") + "</p>";
 }
 
-let primeFirstInput = document.getElementById("prime__input-first-num");
-let primeSecondInput = document.getElementById("prime__input-second-num");
-let primeResult = document.getElementById("prime__result-area");
-let primeCalcBtn = document.getElementById("prime__calc-button");
+let primeFirstInput = document.querySelector(".prime__input-first-num");
+let primeSecondInput = document.querySelector(".prime__input-second-num");
+let primeResult = document.querySelector(".prime__result-area");
+let primeCalcBtn = document.querySelector(".prime__calc-button");
 
 primeCalcBtn.addEventListener("click", function () {
     
@@ -75,7 +75,7 @@ primeCalcBtn.addEventListener("click", function () {
 }, false);
 
 // Reset module on span click close
-let primeSpanClose = document.getElementById("project-prime__span-close");
+let primeSpanClose = document.querySelector(".project-prime__span-close");
 primeSpanClose.addEventListener("click", function () {
     primeFirstInput.value = "";
     primeSecondInput.value = "";

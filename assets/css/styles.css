@@ -639,25 +639,6 @@ template {
   cursor: pointer;
 }
 
-.what-i-learned__link {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.what-i-learned__body {
-  display: none;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 100%;
-  font-size: 1rem;
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s;
-}
-
 /*-------Speed Test -------*/
 .project-speedTest__body p {
   font-size: 1.2rem;
@@ -668,7 +649,7 @@ template {
   font-size: 1.2rem;
 }
 
-#project-speedTest__prompt {
+.project-speedTest__prompt {
   font-size: 1.1rem;
   background-color: #d1d1d1;
   padding: 1rem;
