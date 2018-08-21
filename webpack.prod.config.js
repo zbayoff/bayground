@@ -14,7 +14,7 @@ module.exports = {
         library: 'UserList',
         libraryTarget: 'umd',
         libraryExport: 'default',
-        path: path.resolve(__dirname, 'dist/bayground'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         publicPath: '',
     },

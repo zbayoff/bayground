@@ -13,7 +13,7 @@ const SpeedTypingModule = (function () {
     let timerPara = document.querySelector(".project-speedType__timer");
 
     // Read in text file of prompts.
-    readTextFile('../assets/text/speedTestPrompts.txt');
+    readTextFile('assets/text/speedTestPrompts.txt');
 
     // Event listeners
     typingArea.addEventListener("keyup", function () {
