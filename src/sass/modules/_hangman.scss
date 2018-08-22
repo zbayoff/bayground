@@ -1,0 +1,13 @@
+.hangman-keyboard-container {
+    margin: 2rem 0;
+    p {
+        display: inline-block;
+        margin: 0;
+        padding: 0.25rem;
+        border: 1px solid black;
+        cursor: pointer;
+    }
+    .chosen-letter {
+        background-color: grey;
+    }
+}
