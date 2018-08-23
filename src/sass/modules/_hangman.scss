@@ -9,5 +9,22 @@
     }
     .chosen-letter {
         background-color: grey;
+        cursor: default;
+    }
+}
+
+.letter-box {
+    border-bottom: 1px solid #000;
+    display: inline-block;
+    margin: 0;
+    width: 10px;
+    margin: 0 0.5rem;
+}
+
+.bad-letters-container {
+    p {
+        display: inline-block;
+        margin: 0;
+        padding: 0.25rem;
     }
 }

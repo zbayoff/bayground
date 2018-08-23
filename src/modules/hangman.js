@@ -2,77 +2,100 @@ const HangmanModule = (function () {
 
     'use strict';
 
-    // Read in text file of words
+    let startGameBtn = document.querySelector('.project-hangman .start-btn-js');
+    let playAgainBtn = document.querySelector('.project-hangman  .playagain-btn-js')
+    let keyboard = document.querySelector('.hangman-keyboard-container');
+    let usedLettersContainer = document.querySelector('.used-letters-container');
+    let hangmanFinalPhraseContainer = document.querySelector('.hangman-final-phrase-container');
+    let badLettersContainer = document.querySelector('.bad-letters-container');
 
-
-    // readTextFile('assets/text/hangmanWords.txt');
-    const startGameBtn = document.querySelector('.project-hangman .start-btn-js');
-    const keyboard = document.querySelector('.hangman-keyboard-container');
-    const usedLettersContainer = document.querySelector('.used-letters-container');
-
-    let chosenWord = '';
+    let chosenPhrase = '';
     let chosenLetters = [];
-    let badLetters = []; // letters not found in chosen word
+    let badLetters = []; // letters not found in chosen phrase
     let goodLetters = [];
-    let numGuesses = 0;
 
     // start game button click event handler
     startGameBtn.addEventListener('click', () => {
         readTextFile().then((res) => {
-            chosenWord = chooseRandomWord(res);
+            chosenPhrase = chooseRandomPhrase(res);
+            // display "_" for each letter in phrase
+            displayPhraseUnderscores(chosenPhrase);
             keyboard.addEventListener('click', handleLetterSelection);
-            console.log(chosenWord);
         });
     });
 
+    playAgainBtn.addEventListener('click', restartGame);
+
+    function displayPhraseUnderscores(phrase) {
+        let words = phrase.split(' ');
+        let underscores = '';
+        for (let i = 0; i < words.length; i += 1) {
+            underscores += '<div class="word-block">';
+            for (let j = 0; j < words[i].length; j += 1) {
+                underscores += `<p class="letter-box"></p>`;
+            }
+            underscores += '</div>';
+        }
+        hangmanFinalPhraseContainer.innerHTML = underscores;
+    }
+
+    function displayBadLetters(arr) {
+        let sortedBadLetters = arr.sort();
+        badLettersContainer.innerHTML = sortedBadLetters.map((item) => {
+            return `<p>${item}</p>`;
+        }).join('');
+    }
+
     function handleLetterSelection(e) {
+        const wordBlocks = document.querySelectorAll('.project-hangman .word-block');
         // check event target
         if (e.target.classList.contains('keyboard-letter-js')) {
             let selectedLetter = e.target.innerHTML;
+            let chosenPhraseSquashed = chosenPhrase.split("").filter(function (entry) {
+                return entry.trim() != '';
+            });
             // check if letter has already been chosen
             if (!isLetterSelected(selectedLetter)) {
                 // console.log('letter has not been selected');
                 chosenLetters.push(selectedLetter);
-                if (isLetterinChosenWord(selectedLetter)) {
-                    numGuesses += 1;
-                    // reveal character in final output of chosen word
+                if (isLetterinChosenPhrase(selectedLetter)) {
                     e.target.classList.add('chosen-letter');
-
                     // add all matching characters to good Letters list
-                    for (let i = 0; i < chosenWord.length; i += 1) {
-                        if (selectedLetter === chosenWord[i]) {
+                    for (let i = 0; i < chosenPhrase.length; i += 1) {
+                        if (selectedLetter === chosenPhrase[i]) {
                             goodLetters.push(selectedLetter);
                         }
-
                     }
 
-                    console.log(areTwoStringEqual(goodLetters.join(''), chosenWord));
+                    let count = 0;
 
-                    if (areTwoStringEqual(goodLetters.join(''), chosenWord)) {
+                    for (let i = 0; i < wordBlocks.length; i += 1) {
+                        let word = wordBlocks[i].children;
+                        for (let j = 0; j < word.length; j += 1) {
+                            if (chosenPhraseSquashed[count] === selectedLetter) {
+                                word[j].innerHTML = selectedLetter;
+                                word[j].style.borderBottom = 'none';
+                            }
+                            count += 1;
+                        }
+                    }
+                    // reveal character in final output of chosen phrase
+                    if (areTwoStringEqual(goodLetters.join(''), chosenPhrase)) {
                         console.log('YOU WIN!');
-                        // stop game, output full chosen word, stop timer.
+                        // stop game, output full chosen phrase, stop timer.
                     }
 
+                    // TODO: reveal chosen character in final phrase reveal area
 
-                    // if all characters in goodLettes are in chosen word, you win!
-
-
-                    // TODO: check if entire word was chosen correctly.
-                    // console.log(goodLetters);
-                    // TODO: reveal chosen character in final word reveal area
-
-                    console.log('Letter is in the chosen Word!');
                 } else {
-                    numGuesses += 1;
                     badLetters.push(selectedLetter);
+                    displayBadLetters(badLetters);
                     chosenLetters.push(selectedLetter);
                     e.target.classList.add('chosen-letter');
-                    // console.log('letter added to chosen and bad letter list');
                     // TODO: draw next limb
-                    if (numGuesses === 9) {
+                    if (badLetters.length === 9) {
                         console.log('YOU LOSE');
                         // TODO: stop game (remove event listeners, stop timer)
-
                     }
                 }
             }
@@ -83,21 +106,38 @@ const HangmanModule = (function () {
         return chosenLetters.indexOf(letter) !== -1;
     }
 
-    function isLetterinChosenWord(letter) {
-        return chosenWord.indexOf(letter) !== -1;
+    function isLetterinChosenPhrase(letter) {
+        return chosenPhrase.indexOf(letter) !== -1;
     }
 
     function areTwoStringEqual(str1, str2) {
-
+        let modStr1 = str1.split('').sort().join('');
+        let modStr2 = str2.split("").filter(function (entry) {
+            return entry.trim() != '';
+        }).sort().join('');
+        return modStr1 === modStr2;
     }
 
+    function restartGame() {
+        chosenPhrase = '';
+        chosenLetters = [];
+        badLetters = [];
+        goodLetters = [];
 
+        hangmanFinalPhraseContainer.innerHTML = '';
+        badLettersContainer.innerHTML = '';
 
+        keyboard.removeEventListener('click', handleLetterSelection);
 
-    // read text file of words
+        Array.prototype.forEach.call(keyboard.children, child => {
+            child.classList.remove('chosen-letter');
+          });
+    }
+
+    // read text file of phrases
     async function readTextFile() {
         try {
-            let response = await fetch('assets/text/hangmanWords.txt');
+            let response = await fetch('assets/text/hangmanPhrases.txt');
             let text = await response.text();
             // console.log(text);
             return text;
@@ -106,14 +146,14 @@ const HangmanModule = (function () {
         }
     }
 
-    // choose a random work for the game among the lsit of words
-    function chooseRandomWord(words) {
+    // choose a random work for the game among the lsit of phrases
+    function chooseRandomPhrase(phrases) {
 
-        let wordArray = words.split("\n");
-        // console.log(wordArray);
+        let phraseArray = phrases.split("\n");
+        // console.log(phraseArray);
         // let promptPara = document.querySelector(".project-speedTest__prompt");
-        let randWord = wordArray[Math.floor(Math.random() * wordArray.length)];
-        return randWord;
+        let randPhrase = phraseArray[Math.floor(Math.random() * phraseArray.length)];
+        return randPhrase;
         // promptPara.innerHTML = randPrompt;
     }
 
