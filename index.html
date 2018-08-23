@@ -143,15 +143,26 @@
                                         </div>
                                         <div class="modal-body">
                                             <p>Generate a random hidden phrase. Make some guesses, but not too many, or else...</p>
-                                            <button class="start-btn-js">Start</button>
-                                            <div class="bad-letters-container">
-
+                                            <button type="button" class="start-btn-js button">Start</button>
+                                            <div class="difficulty-container">
+                                                <p>Difficulty</p>
+                                                <div class="difficulty-choice">
+                                                    <input type="radio" id="hangman-difficulty-easy-js" name="difficulty" checked />
+                                                    <label for="hangman-difficulty-easy-js">Easy</label>
+                                                </div>
+                                                <div class="difficulty-choice">
+                                                    <input type="radio" id="hangman-difficulty-hard-js" name="difficulty" />
+                                                    <label for="hangman-difficulty-hard-js">Hard</label>
+                                                </div>
                                             </div>
-                                            <div class="hangman-graphic-container">
+                                            <section class="graphic-bad-letters-container">
+                                                <div class="bad-letters-container">
+                                                </div>
+                                                <div id="hangman-graphic-container">
+                                                </div>
+                                            </section>
 
-                                            </div>
                                             <div class="hangman-final-phrase-container">
-
                                             </div>
                                             <div class="hangman-keyboard-container">
                                                 <p class="keyboard-letter-js">A</p>
@@ -182,9 +193,8 @@
                                                 <p class="keyboard-letter-js">Z</p>
                                             </div>
                                             <div class="hangman-results-container">
-
                                             </div>
-                                            <button class="playagain-btn-js">Play Again</button>
+                                            <button type="button" class="playagain-btn-js button">Play Again</button>
                                         </div>
                                     </div>
                                 </div>
