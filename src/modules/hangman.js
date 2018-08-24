@@ -1,16 +1,12 @@
-import * as Svg from 'svg.js';
+import 'svg.js';
 
 const HangmanModule = (function () {
 
     'use strict';
 
-
-
-
     let startGameBtn = document.querySelector('.project-hangman .start-btn-js');
     let playAgainBtn = document.querySelector('.project-hangman  .playagain-btn-js')
     let keyboard = document.querySelector('.hangman-keyboard-container');
-    let usedLettersContainer = document.querySelector('.used-letters-container');
     let hangmanFinalPhraseContainer = document.querySelector('.hangman-final-phrase-container');
     let badLettersContainer = document.querySelector('.bad-letters-container');
     let hangmanGraphicContainer = document.querySelector('#hangman-graphic-container');
@@ -24,15 +20,48 @@ const HangmanModule = (function () {
     let badLetters = []; // letters not found in chosen phrase
     let goodLetters = [];
 
-    // start game button click event handler
+    // start game button click event listener
     startGameBtn.addEventListener('click', startGame);
     spanClose.addEventListener('click', restartGame);
 
+    // play again button click event listener
+    playAgainBtn.addEventListener('click', restartGame);
+
+    // read text file of phrases
+    async function readTextFile() {
+        // read in different text files based on difficulty mode selected
+        let textFile = '';
+        // if easy mode
+        if (easyRadio.checked === true) {
+            textFile = 'assets/text/hangmanPhrasesEasy.txt';
+        } else {
+            textFile = 'assets/text/hangmanPhrasesHard.txt';
+        }
+
+        try {
+            let response = await fetch(textFile);
+            let text = await response.text();
+            return text;
+        } catch (e) {
+            console.log('Error!', e);
+        }
+    }
+
+    // choose a random work for the game among the lsit of phrases
+    function chooseRandomPhrase(phrases) {
+        let phraseArray = phrases.split("\n");
+        let randPhrase = phraseArray[Math.floor(Math.random() * phraseArray.length)];
+        return randPhrase;
+    }
+
+    // read text file, draw hangman, display hidden chosen word
     function startGame() {
         readTextFile().then((res) => {
             chosenPhrase = chooseRandomPhrase(res);
             displayPhraseUnderscores(chosenPhrase); // display "_" for each letter in phrase
             drawHangmanPost();
+            drawFreeWilly();
+            drawDeadWilly();
             keyboard.addEventListener('click', handleLetterSelection);
         });
         startGameBtn.removeEventListener('click', startGame);
@@ -40,7 +69,90 @@ const HangmanModule = (function () {
         startGameBtn.innerHTML = "Restart";
     }
 
-    playAgainBtn.addEventListener('click', restartGame);
+    function drawHangmanPost() {
+
+        // create SVG document and set size
+        const draw = SVG(hangmanGraphicContainer).size('100%', '100%');
+        draw.viewbox(0, 0, 400, 400);
+
+        const basePost = draw.polyline(`100,44 100,0 400,0 200,400 400,400 0,400`);
+        basePost.fill('none');
+        basePost.stroke({
+            color: '#000',
+            width: 12,
+            linecap: 'round',
+            linejoin: 'round'
+        });
+
+    }
+
+    function drawFreeWilly() {
+        const svgID = hangmanGraphicContainer.querySelector('svg').getAttribute('id');
+        const draw = SVG.get(svgID);
+
+        let freeWilly = draw.group().attr('id', 'freeWilly');
+
+        // draw body parts
+        freeWilly.circle(80).move(60, 50).attr('class', 'head');
+        freeWilly.line(100, 130, 100, 220).attr('class', 'body');
+        freeWilly.line(100, 220, 80, 280).attr('class', 'leg1');
+        freeWilly.line(100, 220, 120, 280).attr('class', 'leg2');
+
+        freeWilly.polyline('100,150 70,190, 140, 150').attr('class', 'arm1');
+        freeWilly.polyline('100,150 200,100').attr('class', 'arm2');
+        freeWilly.path('M 85,80 C 85,80 90,90 95,80').attr('class', 'eye1')
+        freeWilly.path('M 115,80 C 115,80 110,90 105,80').attr('class', 'eye2')
+
+        freeWilly.path('M 90,110 C 100,115 130,110 120,100').attr('class', 'mouth');
+
+        freeWilly.stroke({
+            color: '#000',
+            width: 4,
+            opacity: 1,
+            linecap: 'round',
+            linejoin: 'round'
+        });
+        freeWilly.fill('none');
+        freeWilly.move(0, 120);
+        SVG.select('#freeWilly').attr('display', 'none');
+    }
+
+    function drawDeadWilly() {
+        const svgID = hangmanGraphicContainer.querySelector('svg').getAttribute('id');
+        const draw = SVG.get(svgID);
+
+        let deadWilly = draw.group().attr('id', 'deadWilly');
+
+        // draw body parts
+        deadWilly.circle(80).move(60, 50).attr('class', 'head');
+        deadWilly.line(100, 130, 100, 220).attr('class', 'body');
+        deadWilly.line(100, 220, 80, 280).attr('class', 'leg1');
+        deadWilly.line(100, 220, 120, 280).attr('class', 'leg2');
+        deadWilly.line(100, 150, 85, 210).attr('class', 'arm1');
+        deadWilly.line(100, 150, 115, 210).attr('class', 'arm2');
+        deadWilly.polyline('110,70 120,80').attr('class', 'eye1A');
+        deadWilly.polyline('120,70 110,80').attr('class', 'eye1B');
+        deadWilly.polyline('90,70 80,80').attr('class', 'eye2A');
+        deadWilly.polyline('80,70 90,80').attr('class', 'eye2B');
+        deadWilly.circle(20).attr('class', 'mouth').fill('none').move(90, 100);
+
+        deadWilly.stroke({
+            color: '#000',
+            width: 4,
+            opacity: 1,
+            linecap: 'round',
+            linejoin: 'round'
+        });
+        deadWilly.fill('none');
+
+        // set opacity of all body parts to 0
+        deadWilly.each(function (i, children) {
+            this.stroke({
+                opacity: 0
+            });
+        });
+
+    }
 
     function displayPhraseUnderscores(phrase) {
         let words = phrase.trim().split(' ');
@@ -147,11 +259,6 @@ const HangmanModule = (function () {
         }
     }
 
-    function stopGame() {
-        playAgainBtn.style.display = 'block';
-        keyboard.removeEventListener('click', handleLetterSelection);
-    }
-
     function isLetterSelected(letter) {
         return chosenLetters.indexOf(letter) !== -1;
     }
@@ -168,194 +275,49 @@ const HangmanModule = (function () {
         return modStr1 === modStr2;
     }
 
-    function drawHangmanPost() {
-
-        // define width and height of SVG document
-        const width = 400;
-        const height = 300;
-
-        // create SVG document and set size
-        const draw = SVG(hangmanGraphicContainer).size('100%', '100%');
-        draw.viewbox(0, 0, 400, 400);
-
-        const basePost = draw.polyline(`100,44 100,0 ${width},0 200,400 400,400 0,400`);
-        basePost.fill('none');
-        basePost.stroke({
-            color: '#000',
-            width: 12,
-            linecap: 'round',
-            linejoin: 'round'
-        });
-
-    }
-
-    // TODO: Draw two versions of Willy: lose (Dead Willy) and win (Free Willy) cases.
-
-    function drawWilly() {
-
-    }
-
-    // TODO: Reveal each limb when incorrect letter is selected.If won, reveal free Willy
+    // reveal each limb when incorrect letter is selected.If won, reveal free Willy
     function drawLimb(status) {
-        const svgID = hangmanGraphicContainer.querySelector('svg').getAttribute('id');
-        const draw = SVG.get(svgID);
 
-
-        let body = '';
-        let head = ''
-        let mouth = '';
-        let arm1, arm2 = '';
-        let eye1A, eye1B, eye2A, eye2B = '';
-        let leg1, leg2 = '';
-
-        // draw head
-        head = draw.circle(80);
-        head.fill('none');
-        head.stroke({
-            color: '#000',
-            width: 4,
-            opacity: 0,
-            linecap: 'round',
-            linejoin: 'round'
-        });
-        head.move(60, 50);
-
-        //draw body
-        body = draw.line(100, 130, 100, 220);
-        body.stroke({
-            color: '#000',
-            width: 4,
-            opacity: 0,
-            linecap: 'round',
-            linejoin: 'round'
-        });
-
-        // draw first leg
-        leg1 = draw.line(100, 220, 80, 280);
-        leg1.stroke({
-            color: '#000',
-            width: 4,
-            opacity: 0,
-            linecap: 'round',
-            linejoin: 'round'
-        });
-
-        // draw second leg
-        leg2 = draw.line(100, 220, 120, 280);
-        leg2.stroke({
-            color: '#000',
-            width: 4,
-            opacity: 0,
-            linecap: 'round',
-            linejoin: 'round'
-        });
-
-        // draw first arm
-        arm1 = draw.line(100, 150, 85, 210);
-        arm1.stroke({
-            color: '#000',
-            width: 4,
-            opacity: 0,
-            linecap: 'round',
-            linejoin: 'round'
-        });
-
-        // draw second arm
-        arm2 = draw.line(100, 150, 115, 210);
-        arm2.stroke({
-            color: '#000',
-            width: 4,
-            opacity: 0,
-            linecap: 'round',
-            linejoin: 'round'
-        });
-
+        const deadWilly = hangmanGraphicContainer.querySelector('svg #deadWilly');
 
         if (badLetters.length === 1) {
-            head.animate(250, '<>', 250).stroke({
+            SVG.select('#deadWilly .head', deadWilly).animate(250, '<>', 250).stroke({
                 opacity: 1,
             });
         } else if (badLetters.length === 2) {
-            body.animate(250, '<>', 250).stroke({
+            SVG.select('#deadWilly .body', deadWilly).animate(250, '<>', 250).stroke({
                 opacity: 1,
             });
         } else if (badLetters.length === 3) {
-            leg1.animate(250, '<>', 250).stroke({
+            SVG.select('#deadWilly .leg1', deadWilly).animate(250, '<>', 250).stroke({
                 opacity: 1,
             });
         } else if (badLetters.length === 4) {
-            leg2.animate(250, '<>', 250).stroke({
+            SVG.select('#deadWilly .leg2', deadWilly).animate(250, '<>', 250).stroke({
                 opacity: 1,
             });
         } else if (badLetters.length === 5) {
-            arm1.animate(250, '<>', 250).stroke({
+            SVG.select('#deadWilly .arm1', deadWilly).animate(250, '<>', 250).stroke({
                 opacity: 1,
             });
         } else if (badLetters.length === 6) {
-            arm2.animate(250, '<>', 250).stroke({
-                opacity: 1
+            SVG.select('#deadWilly .arm2', deadWilly).animate(250, '<>', 250).stroke({
+                opacity: 1,
             });
         } else if (badLetters.length === 7) {
-            eye1A = draw.polyline('110,70 120,80');
-            eye1B = draw.polyline('120,70 110,80');
-            eye1A.animate(250, '<>', 250).stroke({
-                color: '#000',
-                width: 2,
-                linecap: 'round',
-                linejoin: 'round'
+            SVG.select('#deadWilly .eye1A, #deadWilly .eye2A,#deadWilly .eye1B, #deadWilly .eye2B, #deadWilly .mouth', deadWilly).animate(250, '<>', 250).stroke({
+                opacity: 1,
             });
-            eye1B.animate(250, '<>', 250).stroke({
-                color: '#000',
-                width: 2,
-                linecap: 'round',
-                linejoin: 'round'
-            });
-
-            eye2A = draw.polyline('90,70 80,80');
-            eye2B = draw.polyline('80,70 90,80');
-            eye2A.animate(250, '<>', 250).stroke({
-                color: '#000',
-                width: 2,
-                linecap: 'round',
-                linejoin: 'round'
-            });
-            eye2B.animate(250, '<>', 250).stroke({
-                color: '#000',
-                width: 2,
-                linecap: 'round',
-                linejoin: 'round'
-            });
-
-            mouth = draw.circle(20);
-            mouth.fill('none');
-            mouth.animate(250, '<>', 250).stroke({
-                color: '#000',
-                width: 2,
-                linecap: 'round',
-                linejoin: 'round'
-            });
-            mouth.move(90, 100);
         }
-
         if (status === 'won') {
-            // free Willy, change mouth expression, reveal all limbs
-
-            // head.animate(250, '<>', 250).stroke({
-            //     opacity: 1,
-            // });
-            // head.move(60, 400);
-            // arm1.animate(250, '<>', 250).stroke({
-            //     opacity: 1,
-            // });
-            // arm1.move(60, 400);
-            // arm2.animate(250, '<>', 250).stroke({
-            //     opacity: 1,
-            // });
-            // arm2.move(60, 400);
-
-
+            SVG.select('#deadWilly').attr('display', 'none');
+            SVG.select('#freeWilly').attr('display', 'block');
         }
+    }
 
+    function stopGame() {
+        playAgainBtn.style.display = 'block';
+        keyboard.removeEventListener('click', handleLetterSelection);
     }
 
     function restartGame() {
@@ -379,40 +341,5 @@ const HangmanModule = (function () {
         startGame();
 
     }
-
-    // read text file of phrases
-    async function readTextFile() {
-        // read in different text files based on difficulty mode selected
-        let textFile = '';
-        // if easy mode
-        if (easyRadio.checked === true) {
-            textFile = 'assets/text/hangmanPhrasesEasy.txt';
-        } else {
-            textFile = 'assets/text/hangmanPhrasesHard.txt';
-        }
-
-        try {
-            let response = await fetch(textFile);
-            let text = await response.text();
-            return text;
-        } catch (e) {
-            console.log('Error!', e);
-        }
-    }
-
-    // choose a random work for the game among the lsit of phrases
-    function chooseRandomPhrase(phrases) {
-        let phraseArray = phrases.split("\n");
-        let randPhrase = phraseArray[Math.floor(Math.random() * phraseArray.length)];
-        return randPhrase;
-    }
-
-
-    // generate hangman post
-    // restart game
-    // display result
-    // check letter
-
-
 
 })();

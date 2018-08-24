@@ -25,6 +25,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    margin: 0 0 2rem 0;
     .difficulty-choice {
         // background-color: red;
     }
@@ -34,7 +35,7 @@
     text-align: center;
     margin: 1rem 0;
     .word-block {
-        margin: 0.5rem 0;
+        margin: 1rem 0;
         .letter-box {
             border-bottom: 1px solid #000;
             display: inline-block;
