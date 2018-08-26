@@ -11,6 +11,7 @@ const ConcentrateYoModule = (function () {
     const spanClose = document.querySelector(".project-concentrateYo .close-js");
     const timerPara = document.querySelector(".project-concentrateYo__timer");
     const gridError = document.querySelector('.project-concentrateYo__grid-error');
+    let loadingSpinner = document.querySelector('.project-concentrateYo .loading-spinner');
 
     let prevTile;
     let clickDisabled = false;
@@ -22,11 +23,24 @@ const ConcentrateYoModule = (function () {
     let elapsed = 0;
     let timerFired = false;
     let testComplete = false;
+    let tileImgObjArray = [];
+    let allImageArray = [];
+
+
+    // preload all tile images
+    let imgBase = 'assets/img/concentrateYo/';
+
+    for (let i = 0; i < 100; i += 1) {
+        allImageArray.push(`tileImg-${i}`);
+    }
+    preloadImages(imgBase, allImageArray);
 
     createGridBtn.addEventListener('click', function () {
         // error input handling type number
         if (gridSizeInput.value) {
             createGrid(parseInt(gridSizeInput.value));
+        } else {
+            gridError.innerHTML = "Please enter a grid size.";
         }
     });
 
@@ -59,6 +73,8 @@ const ConcentrateYoModule = (function () {
                 let imgArray = [];
                 imgArray = getImages(gridSize);
 
+
+
                 let imgArrayShuffled = shuffle(imgArray);
                 // Loop through shuffled image array and output to browser. 
 
@@ -76,47 +92,49 @@ const ConcentrateYoModule = (function () {
                     columnSize = '10%';
                 } else if (gridSize === 10) {
                     columnSize = '7%';
-                    // gridContainer.style.maxWidth = `80%`;
-                    for (let i = 0; i < imgTileContainer.length; i += 1) {
-                        // imgTileContainer[i].style.minWidth = `50px`;
-                    }
                 }
 
-                // gridContainer.style.gridTemplateColumns = `repeat(${gridSize},${columnSize})`;
                 gridContainer.style.gridTemplateColumns = `repeat(${gridSize},${columnSize})`;
-
 
                 imgArrayShuffled.map((item, index) => {
                     setTimeout(() => {
                         gridContainer.innerHTML += `<div class="imgTile-container"><div><p class="imgTile closed" data-tileid="${index}"></p><img src="assets/img/concentrateYo/${item}.png"></div></div>`
                     }, index * 50);
-                }).join('')
+                }).join('');
             } else {
-                gridError.innerHTML = "Grid size can only be 2, 4, 6, 8 or 10."
+                gridError.innerHTML = "Grid size can only be 2, 4, 6, 8 or 10.";
             }
         }
     }
 
-    // function setVendor(element, property, value) {
-    //     console.log(element.style);
-    //     element.style["moz-" + property] = value;
-    //     element.style["ms-" + property] = value;
-    //     element.style["o-" + property] = value;
-    //   }
+    function preloadImages(base, imgArray) {
+
+        let count = 0;
+
+        imgArray.forEach(function (img) {
+
+            tileImgObjArray[count] = new Image();
+            tileImgObjArray[count].src = base + img + '.png';
+            count += 1;
+
+        });
+    }
 
     function getImages(gridSize) {
 
         let imgSrc = [];
         let imageArray = [];
+        let imgBase = 'assets/img/concentrateYo/';
 
         for (let i = 0; i < (gridSize * gridSize) / 2; i += 1) {
-
             imageArray.push(`tileImg-${i}`);
         }
 
         numImages = imageArray.length;
 
         imageArray.push(...imageArray);
+
+        preloadImages(imgBase, imageArray);
 
         return imageArray;
     }

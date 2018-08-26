@@ -1,6 +1,6 @@
 .hangman-keyboard-container {
     max-width: 500px;
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
@@ -13,6 +13,9 @@
         padding: 0.25rem;
         border: 1px solid black;
         cursor: pointer;
+        &:hover {
+            background-color: grey;
+        }
     }
     .chosen-letter {
         background-color: grey;
@@ -28,6 +31,7 @@
     margin: 0 0 2rem 0;
     .difficulty-choice {
         // background-color: red;
+        margin: 0.25rem 0;
     }
 }
 
@@ -55,6 +59,17 @@
     justify-content: center;
     @media screen and (min-width: 562px) {
         flex-direction: row;
+    }
+}
+
+.project-hangman .loading-spinner {
+    display: none;
+    width: 100%;
+    text-align: center;
+    img {
+        text-align: center;
+        margin: 0 auto;
+        width: 150px;
     }
 }
 

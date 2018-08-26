@@ -14,6 +14,7 @@ const HangmanModule = (function () {
     let easyRadio = document.querySelector('#hangman-difficulty-easy-js');
     let hardRadio = document.querySelector('#hangman-difficulty-hard-js');
     let spanClose = document.querySelector(".project-hangman .close-js");
+    let loadingSpinner = document.querySelector('.project-hangman .loading-spinner');
 
     let chosenPhrase = '';
     let chosenLetters = [];
@@ -23,6 +24,31 @@ const HangmanModule = (function () {
     // start game button click event listener
     startGameBtn.addEventListener('click', startGame);
     spanClose.addEventListener('click', restartGame);
+
+
+
+    // read text file, draw hangman, display hidden chosen word
+    function startGame() {
+        // start loading spinner
+        loadingSpinner.style.display = 'block';
+        keyboard.style.display = 'none';
+
+        readTextFile().then((res) => {
+            chosenPhrase = chooseRandomPhrase(res);
+            displayPhraseUnderscores(chosenPhrase); // display "_" for each letter in phrase
+            drawHangmanPost();
+            drawFreeWilly();
+            drawDeadWilly();
+            keyboard.addEventListener('click', handleLetterSelection);
+        }).then(() => {
+            //remove loading spinner
+            loadingSpinner.style.display = 'none';
+            keyboard.style.display = 'flex';
+        })
+        startGameBtn.removeEventListener('click', startGame);
+        startGameBtn.addEventListener('click', restartGame);
+        startGameBtn.innerHTML = "Restart";
+    }
 
     // play again button click event listener
     playAgainBtn.addEventListener('click', restartGame);
@@ -52,21 +78,6 @@ const HangmanModule = (function () {
         let phraseArray = phrases.split("\n");
         let randPhrase = phraseArray[Math.floor(Math.random() * phraseArray.length)];
         return randPhrase;
-    }
-
-    // read text file, draw hangman, display hidden chosen word
-    function startGame() {
-        readTextFile().then((res) => {
-            chosenPhrase = chooseRandomPhrase(res);
-            displayPhraseUnderscores(chosenPhrase); // display "_" for each letter in phrase
-            drawHangmanPost();
-            drawFreeWilly();
-            drawDeadWilly();
-            keyboard.addEventListener('click', handleLetterSelection);
-        });
-        startGameBtn.removeEventListener('click', startGame);
-        startGameBtn.addEventListener('click', restartGame);
-        startGameBtn.innerHTML = "Restart";
     }
 
     function drawHangmanPost() {

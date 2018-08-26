@@ -10,6 +10,20 @@
     <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave+Display" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alef|Reem+Kufi" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115178608-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-115178608-1');
+    </script>
+
 </head>
 
 <body class="portfolio-bayground">
@@ -105,7 +119,7 @@
                                             <p class="project-concentrateYo__instruct">The game of concentration. Find the matching flags. Test your memory!</p>
                                             <div class="project-concentrateYo__container">
                                                 <div>
-                                                    <label value="Create Grid Size">Grid Size (2, 4, 6, 8, 10)</label>
+                                                    <label value="Create Grid Size">Enter Grid Size (2, 4, 6, 8, 10)</label>
                                                     <input type="number" class="form-input-inline project-concentrateYo__gridSizeInput">
                                                     <span>
                                                         <button type="button" class="button project-concentrateYo__createGrid-btn">Create Grid</button>
@@ -115,7 +129,9 @@
                                                     <p class="project-concentrateYo__grid-error"></p>
                                                 </div>
                                                 <div class="project-concentrateYo__grid-container">
-
+                                                    <div class="loading-spinner">
+                                                        <img src="assets/img/hangman/Rolling-1s-200px.gif">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="project-concentrateYo__results">
@@ -161,6 +177,9 @@
                                                 <div id="hangman-graphic-container">
                                                 </div>
                                             </section>
+                                            <div class="loading-spinner">
+                                                <img src="assets/img/hangman/Rolling-1s-200px.gif">
+                                            </div>
                                             <div class="hangman-final-phrase-container">
                                             </div>
                                             <div class="hangman-keyboard-container">

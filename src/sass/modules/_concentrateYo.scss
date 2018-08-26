@@ -15,6 +15,7 @@
     grid-row-gap: 5px;
     margin: 1rem auto 1rem auto;
     .imgTile-container {
+        cursor: pointer;
         position: relative;
         height: 100%;
         width: $tile-size;
@@ -160,4 +161,15 @@
 
 .project-concentrateYo__grid-error {
     color: red;
+}
+
+.project-concentrateYo .loading-spinner {
+    display: none;
+    width: 100%;
+    text-align: center;
+    img {
+        text-align: center;
+        margin: 0 auto;
+        width: 150px;
+    }
 }
