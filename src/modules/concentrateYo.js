@@ -307,5 +307,3 @@ const ConcentrateYoModule = (function () {
     }
 
 })();
-
-// export default ConcentrateYoModule;

@@ -1,4 +1,5 @@
 .bayground-container {
+    padding-top: 1rem;
     padding-bottom: 150px;
 }
 
@@ -6,6 +7,7 @@
 
 .container-bayground-projects__header {
     text-align: center;
+    margin-top: 0;
 }
 
 .container-bayground-projects__info {
@@ -50,3 +52,26 @@
     cursor: pointer;
 }
 
+.page {
+    min-height: 100vh;
+    position: relative;
+}
+
+footer {
+    height: 150px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 1rem;
+    section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 0 1rem;
+        border-top: 1px dotted black;
+        text-align: center;
+    }
+}
