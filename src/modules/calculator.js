@@ -1,185 +1,194 @@
-const CalculatorModule = (function () {
+// const CalculatorModule = (function () {
 
-    'use strict';
+'use strict';
 
-    // The calculator App
-    class CalculatorApp {
+// The calculator App
 
-        // Initializes the Calcualtor App
-        constructor() {
-            console.log('app is created');
+export default class CalculatorApp {
 
-            this.firstNum = '0';
-            this.secondNum = '0';
-            this.secondNumCopy = '0';
-            this.operator = null;
+    // Initializes the Calcualtor App
+    constructor() {
+        console.log('app is created');
 
-            this.calculatorKeysContainer = document.querySelector('.calculator-keys');
-            this.computeButton = document.querySelector('.compute-btn-js');
-            this.allClearButton = document.querySelector('.project-calculator .all-clear');
-            this.numButtons = document.querySelectorAll('.num-btn-js');
+        this.firstNum = '0';
+        this.secondNum = '0';
+        this.secondNumCopy = '0';
+        this.answer = '0';
 
-            this.displayArea = document.querySelector('.project-calculator .display-area');
-
-            this.calculatorKeysContainer.addEventListener('click', e => this.handleClick(e))
-
-            this.allClearButton.addEventListener('click', e => this.clearAll());
-            this.computeButton.addEventListener('click', e => this.compute())
+        this.operator = null;
+        this.previousOperator = null;
 
 
-        }
+        this.computeButton = document.querySelector('.compute-btn-js');
+        this.allClearButton = document.querySelector('.project-calculator .all-clear');
+        this.numButtons = document.querySelectorAll('.num-btn-js');
+        this.operatorButtons = document.querySelectorAll('.operator-js');
+        this.displayArea = document.querySelector('.project-calculator .display-area');
+        this.spanClose = document.querySelector(".project-calculator .close-js");
 
-        handleClick(e) {
+        this.numButtons.forEach(num => {
+            num.addEventListener('click', e => this.handleNumbers(e));
+        });
 
-            // check if target is a calculator button
-            if (e.target.classList.contains('calc-btn-js')) {
+        this.operatorButtons.forEach(operator => {
+            operator.addEventListener('click', e => this.handleOperators(e));
+        });
 
-                // check if button is a number
-                if (e.target.classList.contains('num-btn-js')) {
-
-
-
-                    // check if operator has been selected
-                    if (this.operator === null) {
-                        // assign target number to firstNum
-                        this.firstNum += e.target.value;
-                        // console.log('firstNum is: ' + this.firstNum);
-
-                    } else {
-                        this.secondNum += e.target.value;
-
-                        // console.log('secondNum is: ' + this.secondNum);
-                    }
-
-                    // check if leading number is 0
-                    this.firstNum = this.removeLeadingZero(this.firstNum);
-                    this.secondNum = this.removeLeadingZero(this.secondNum);
-
-                    console.log('firstNum is: ' + this.firstNum);
-                    console.log('secondNum is: ' + this.secondNum);
-                    console.log('operator is: ' + this.operator);
-
-
-                }
-
-                // check if button is an operator
-                if (e.target.classList.contains('operator-js')) {
-
-                    // Case 1: First Number is selected, not second.
-                    // Case 2: First Number and Second Number are selected
-
-                    if (this.firstNum !== '0' && this.secondNum !== '0') {
-                        this.compute();
-                    } else {
-                        // reset secondNum
-                        // this.secondNum = 0;
-                    }
-
-
-
-                    // set operator value
-                    this.operator = e.target.value;
-
-                }
-
-            }
-        }
-
-        removeLeadingZero(str) {
-            if (str.length > 1) {
-                if (str[0] === '0') {
-                    return str.slice(1);
-                } else {
-                    return str;
-                }
-            } else {
-                return str;
-            }
-        }
-
-        // computes result if equals button is clicked OR operator button is clicked after a second number is chosen
-        compute() {
-            // switch on operation string, call proper function with appropriate values
-            // console.log('computing...');
-            console.log(this.operator);
-            if (this.operator === 'add' || this.operator === 'subtract' || this.operator === 'multiply' || this.operator === 'divide') {
-
-                switch (this.operator) {
-                    case 'add':
-                        this.secondNumCopy = this.secondNum;
-                        this.firstNum = this.add(Number(this.firstNum), Number(this.secondNumCopy));
-                        // display firstNum;
-                        console.log('Computed answer and firstNum is: ' + this.firstNum);
-                        // this.secondNumCopy = this.secondNum;
-                        this.secondNum = 0;
-                        console.log('The second num is: ' + this.secondNum);
-                        break;
-                    case 'subtract':
-                        this.firstNum = this.subtract(Number(this.firstNum), Number(this.secondNum));
-                        console.log('Computed answer and firstNum is: ' + this.firstNum);
-                        break;
-                    case 'multiply':
-                        this.firstNum = this.multiply(Number(this.firstNum), Number(this.secondNum));
-                        console.log('Computed answer and firstNum is: ' + this.firstNum);
-                        break;
-                    case 'divide':
-                        this.firstNum = this.divide(Number(this.firstNum), Number(this.secondNum));
-                        console.log('Computed answer and firstNum is: ' + this.firstNum);
-                        break;
-                    default:
-                        console.log('no operator');
-
-                }
-
-
-
-            } else if (this.operator === 'equal') {
-
-            }
-
-
-
-        }
-
-        add(x, y) {
-            return x + y;
-        }
-
-        subtract(x, y) {
-            return x - y;
-        }
-
-        multiply(x, y) {
-            return x * y;
-        }
-
-        divide(x, y) {
-            return x / y;
-        }
-
-        // Display answer
-        displayAnswer() {
-
-        }
-
-        displayCurrentValue(num) {
-            this.displayArea.innerHTML += num;
-        }
-
-        // Clear display area
-        clearAll() {
-            this.firstNum = 0;
-            this.secondNum = 0;
-            this.operator = null;
-        }
-
-
-
+        this.computeButton.addEventListener('click', e => this.handleEvalulation());
+        this.allClearButton.addEventListener('click', e => this.clearAll());
+        this.spanClose.addEventListener('click', e => this.clearAll());
 
     }
 
-    window.addEventListener('load', () => new CalculatorApp());
+    handleNumbers(e) {
+        // if previous operator was equal, reset calculation
+        if (this.previousOperator === 'equal') {
+            this.firstNum = '0';
+            this.secondNum = '0';
+            this.operator = null;
+            this.previousOperator = null;
+        }
+
+        // check if operator has been selected
+        if (this.operator === null) {
+            // assign target number to firstNum
+            this.firstNum += e.target.value;
+            // remove leading zeroes
+            this.firstNum = this.removeLeadingZero(this.firstNum);
+            // display in text area
+            this.displayAnswer(this.firstNum);
+        } else {
+            // assign target number to firstNum
+            this.secondNum += e.target.value;
+            // remove leading zeroes
+            this.secondNum = this.removeLeadingZero(this.secondNum);
+            // display in text area
+            this.displayAnswer(this.secondNum);
+        }
+
+        // console.log('firstNum is: ' + this.firstNum);
+        // console.log('secondNum is: ' + this.secondNum);
+        // console.log('operator is: ' + this.operator);
+    }
+
+    handleOperators(e) {
+        // set operator value
+        this.operator = e.target.value;
+        // if previous operation was equal, set first number to answer to set up next calc
+        if (this.previousOperator === 'equal') {
+            this.firstNum = this.answer;
+        }
+
+        // if operator was clicked after 2 numbers, chain the operation and compute
+        if (this.firstNum !== '0' && this.secondNum !== '0' && this.previousOperator !== 'equal') {
+            this.compute(this.firstNum, this.secondNum, this.operator);
+            this.firstNum = this.answer;
+        }
 
 
 
-}());
+        // reset second num
+        this.secondNum = 0;
+
+        // set previous operation to operator
+        this.previousOperator = 'operator';
+    }
+
+    handleEvalulation() {
+        if (this.operator === null) {
+            return;
+        }
+
+        // if previous click was equal, repeat firstNum operator secondNum, replacing firstNum with the answer
+        if (this.previousOperator === 'equal') {
+            this.firstNum = this.answer;
+            this.compute(this.firstNum, this.secondNum, this.operator);
+        }
+
+        // compute answer
+        this.compute(this.firstNum, this.secondNum, this.operator);
+        this.previousOperator = 'equal';
+    }
+
+    removeLeadingZero(str) {
+        if (str.length > 1) {
+            if (str[0] === '0') {
+                return str.slice(1);
+            } else {
+                return str;
+            }
+        } else {
+            return str;
+        }
+    }
+
+    // computes result if equals button is clicked OR operator button is clicked after a second number is chosen
+    compute(x, y, op) {
+        // switch on operation string, call proper function with appropriate values
+        switch (op) {
+            case 'add':
+                this.answer = this.add(Number(x), Number(y));
+                this.displayAnswer(this.answer);
+                console.log('Computed answer is: ' + this.answer);
+                break;
+            case 'subtract':
+                this.answer = this.subtract(Number(x), Number(y));
+                this.displayAnswer(this.answer);
+                console.log('Computed answer is: ' + this.answer);
+                break;
+            case 'multiply':
+                this.answer = this.multiply(Number(x), Number(y));
+                this.displayAnswer(this.answer);
+                console.log('Computed answer is: ' + this.answer);
+                break;
+            case 'divide':
+                this.answer = this.divide(Number(x), Number(y));
+                this.displayAnswer(this.answer);
+                console.log('Computed answer is: ' + this.answer);
+                break;
+            default:
+                console.log('no operator');
+        }
+    }
+
+    add(x, y) {
+        return x + y;
+    }
+
+    subtract(x, y) {
+        return x - y;
+    }
+
+    multiply(x, y) {
+        return x * y;
+    }
+
+    divide(x, y) {
+        return x / y;
+    }
+
+    // Display answer
+    displayAnswer(value) {
+        this.displayArea.innerHTML = '';
+        this.displayArea.innerHTML = value;
+    }
+
+    // Clear display area
+    clearAll() {
+        this.firstNum = '0';
+        this.secondNum = '0';
+        this.answer = '0';
+        this.previousOperator = null;
+        this.operator = null;
+        this.displayArea.innerHTML = '0';
+    }
+
+}
+
+// create app on window load
+window.addEventListener('load', () => new CalculatorApp());
+
+
+// }());
+
+// module.exports = CalculatorApp;

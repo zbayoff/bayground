@@ -8,8 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: './src/app.js',
-    mode: 'production',
+    entry: ['babel-polyfill', './src/app.js'],
     output: {
         library: 'UserList',
         libraryTarget: 'umd',
@@ -18,6 +17,7 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '',
     },
+    devtool: 'inline-source-map',
     module: {
         rules: [{
                 test: /\.js$/,
@@ -61,7 +61,15 @@ module.exports = {
         ]
     },
     plugins: [
-        new uglifyJsPlugin(),
+        new uglifyJsPlugin({ 
+            sourceMap: true,
+            uglifyOptions: {
+                output: {
+                    comments: false,
+                    beautify: false
+                }
+            }
+        }),
         new MiniCssExtractPlugin({
             filename: 'bundle.css',
         }),
@@ -73,6 +81,6 @@ module.exports = {
             from: 'src/assets',
             to: 'assets'
         }]),
-        new webpack.SourceMapDevToolPlugin({})
+        // new webpack.SourceMapDevToolPlugin({})
     ]
 };
