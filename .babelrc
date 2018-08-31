@@ -1,26 +1,3 @@
 {
-    "presets": [
-        [
-            "env",
-            {
-                "modules": false
-            }
-        ]
-    ],
-    "env": {
-        "test": {
-            "presets": [
-                "jest",
-                [
-                    "env",
-                    {
-                        "modules": "commonjs",
-                        "targets":{
-                            "node": "current"
-                        }
-                    }
-                ]
-            ]
-        }
-    }
+    "presets": ["env"]
 }
