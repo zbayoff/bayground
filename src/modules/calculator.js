@@ -1,22 +1,16 @@
-// const CalculatorModule = (function () {
-
 'use strict';
 
 // The calculator App
-
 export default class CalculatorApp {
 
     // Initializes the Calcualtor App
     constructor() {
 
-
         this.firstNum = '';
         this.secondNum = '';
         this.answer = '0';
-
         this.operator = null;
         this.previousOperator = null;
-
 
         this.computeButton = document.querySelector('.compute-btn-js');
         this.allClearButton = document.querySelector('.project-calculator .all-clear');
@@ -41,8 +35,6 @@ export default class CalculatorApp {
 
     handleNumbers(val) {
 
-
-
         // if previous operator was equal, reset calculation
         if (this.previousOperator === 'equal') {
             this.firstNum = '0';
@@ -53,6 +45,7 @@ export default class CalculatorApp {
 
         // check if operator has been selected
         if (this.operator === null) {
+
             // assign target number to firstNum
             if (this.numDigits(this.firstNum) > 11) {
                 return;
@@ -70,6 +63,7 @@ export default class CalculatorApp {
             this.firstNum = this.removeLeadingZero(this.firstNum);
             // display in text area
             this.displayAnswer(this.firstNum);
+
         } else {
 
             // assign target number to firstNum
@@ -150,22 +144,18 @@ export default class CalculatorApp {
             case 'add':
                 this.answer = this.add(Number(x), Number(y));
                 this.displayAnswer(this.cleanse(this.answer));
-                // console.log('Computed answer is: ' + this.answer);
                 break;
             case 'subtract':
                 this.answer = this.subtract(Number(x), Number(y));
                 this.displayAnswer(this.cleanse(this.answer));
-                // console.log('Computed answer is: ' + this.answer);
                 break;
             case 'multiply':
                 this.answer = this.multiply(Number(x), Number(y));
                 this.displayAnswer(this.cleanse(this.answer));
-                // console.log('Computed answer is: ' + this.answer);
                 break;
             case 'divide':
                 this.answer = this.divide(Number(x), Number(y));
                 this.displayAnswer(this.cleanse(this.answer));
-                // console.log('Computed answer is: ' + this.answer);
                 break;
             default:
                 console.log('no operator');
@@ -174,23 +164,15 @@ export default class CalculatorApp {
 
     // check size of number, if floating point, precision, rounding
     cleanse(num) {
-        // console.log(num);
         // check if number is integer
         if (this.isInt(num)) {
-            // console.log(this.numDigits(num))
             if (this.numDigits(num) > 20) {
-                // console.log((num.toExponential(5)));
                 return (num.toExponential(5));
             }
             return num;
         } else { // is floating point
-
             num = +num.toFixed(5);
-            // console.log(num);
-
             if (this.numDigits(num) > 20) {
-                // console.log((num.toExponential(5)));
-                // console.log('yes')
                 return (num.toExponential(5));
             }
 
@@ -210,7 +192,6 @@ export default class CalculatorApp {
         let numDigits = 0;
         if (typeof num === 'string') {
             numDigits = num.length;
-            // console.log(num);
         } else {
             numDigits = num.toString().length;
         }
@@ -254,8 +235,3 @@ export default class CalculatorApp {
 
 // create app on window load
 window.addEventListener('load', () => new CalculatorApp());
-
-
-// }());
-
-// module.exports = CalculatorApp;

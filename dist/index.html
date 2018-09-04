@@ -10,6 +10,20 @@
     <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave+Display" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alef|Reem+Kufi" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115178608-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-115178608-1');
+    </script>
+
 <link href="bundle.css" rel="stylesheet"></head>
 
 <body class="portfolio-bayground">
@@ -69,7 +83,8 @@
                                             <h2>Speed Typing Test</h2>
                                         </div>
                                         <div class="modal-body">
-                                            <p class="project-speedTest__instruct">Here you are given a prompt and must type it correctly in the text box below.
+                                            <p class="project-speedTest__instruct">Here you are given a prompt and must
+                                                type it correctly in the text box below.
                                                 Once typed correctly, your results will display below.</p>
                                             <p>Prompt:</p>
                                             <blockquote class="project-speedTest__prompt"></blockquote>
@@ -83,7 +98,8 @@
                                                 <p>Try again to improve your speed or get a different prompt!</p>
                                             </div>
                                             <button class="project-speedType__tryagain-btn" type="button">Try Again</button>
-                                            <button class="project-speedType__diffprompt-btn" type="button">Different Prompt</button>
+                                            <button class="project-speedType__diffprompt-btn" type="button">Different
+                                                Prompt</button>
                                         </div>
                                     </div>
                                 </div>
@@ -102,20 +118,24 @@
                                             <h2>Concentrate Yo!</h2>
                                         </div>
                                         <div class="modal-body">
-                                            <p class="project-concentrateYo__instruct">The game of concentration. Find the matching flags. Test your memory!</p>
+                                            <p class="project-concentrateYo__instruct">The game of concentration. Find
+                                                the matching flags. Test your memory!</p>
                                             <div class="project-concentrateYo__container">
                                                 <div>
-                                                    <label value="Create Grid Size">Grid Size (2, 4, 6, 8, 10)</label>
+                                                    <label value="Create Grid Size">Enter Grid Size (2, 4, 6, 8, 10)</label>
                                                     <input type="number" class="form-input-inline project-concentrateYo__gridSizeInput">
                                                     <span>
-                                                        <button type="button" class="button project-concentrateYo__createGrid-btn">Create Grid</button>
+                                                        <button type="button" class="button project-concentrateYo__createGrid-btn">Create
+                                                            Grid</button>
                                                     </span>
                                                 </div>
                                                 <div>
                                                     <p class="project-concentrateYo__grid-error"></p>
                                                 </div>
                                                 <div class="project-concentrateYo__grid-container">
-
+                                                    <div class="loading-spinner">
+                                                        <img src="assets/img/hangman/Rolling-1s-200px.gif">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="project-concentrateYo__results">
@@ -123,7 +143,8 @@
                                                 <p class="project-concentrateYo__result-accuracy"></p>
                                                 <p class="project-concentrateYo__result-blurb"></p>
                                             </div>
-                                            <button class="button project-concentrateYo__playagain-btn" type="button">Play Again</button>
+                                            <button class="button project-concentrateYo__playagain-btn" type="button">Play
+                                                Again</button>
                                         </div>
                                     </div>
                                 </div>
@@ -142,11 +163,13 @@
                                             <h2>Hangman</h2>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Generate a random hidden phrase. Make some guesses, but not too many, or else...</p>
+                                            <p>Generate a random hidden phrase. Make some guesses, but not too many, or
+                                                else...</p>
                                             <div class="difficulty-container">
                                                 <p>Difficulty</p>
                                                 <div class="difficulty-choice">
-                                                    <input type="radio" id="hangman-difficulty-easy-js" name="difficulty" checked />
+                                                    <input type="radio" id="hangman-difficulty-easy-js" name="difficulty"
+                                                        checked />
                                                     <label for="hangman-difficulty-easy-js">Easy</label>
                                                 </div>
                                                 <div class="difficulty-choice">
@@ -161,6 +184,9 @@
                                                 <div id="hangman-graphic-container">
                                                 </div>
                                             </section>
+                                            <div class="loading-spinner">
+                                                <img src="assets/img/hangman/Rolling-1s-200px.gif">
+                                            </div>
                                             <div class="hangman-final-phrase-container">
                                             </div>
                                             <div class="hangman-keyboard-container">
@@ -200,10 +226,64 @@
                             </div>
                         </section>
                         <!-- Hangman Module Section -->
+                        <section class="project-calculator">
+                            <div class="module-item">
+                                <h3 class="module-title">Calculator</h3>
+                            </div>
+                            <div class="modal">
+                                <div class="modal-column">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <span class="close close-js">&times;</span>
+                                            <h2>Calculator</h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3 class="title">"Math is a wonderful thing!"</h3>
+                                            <h4 class="title-quote-author">- Mr.Schneebly</h4>
+                                            <div class="calculator-container">
+                                                <div class="display-area">0</div>
+                                                <section class="calculator-keys">
+                                                    <button type="button" class="all-clear" value="all-clear">AC</button>
+
+                                                    <button type="button" class="div-btn-js operator operator-js" value="divide">/</button>
+                                                    <button type="button" class="mult-btn-js operator operator-js"
+                                                        value="multiply">*</button>
+                                                    <button type="button" class="sub-btn-js operator operator-js" value="subtract">-</button>
+                                                    <button type="button" class="add-btn-js operator operator-js" value="add">+</button>
+
+                                                    <button type="button" class="compute-btn-js equal-sign operator" value="equal">=</button>
+
+                                                    <button type="button" class="num-btn num-btn-js" value="7">7</button>
+                                                    <button type="button" class="num-btn num-btn-js" value="8">8</button>
+                                                    <button type="button" class="num-btn num-btn-js" value="9">9</button>
+                                                    <button type="button" class="num-btn num-btn-js" value="4">4</button>
+                                                    <button type="button" class="num-btn num-btn-js" value="5">5</button>
+                                                    <button type="button" class="num-btn num-btn-js" value="6">6</button>
+                                                    <button type="button" class="num-btn num-btn-js" value="1">1</button>
+                                                    <button type="button" class="num-btn num-btn-js" value="2">2</button>
+                                                    <button type="button" class="num-btn num-btn-js" value="3">3</button>
+
+                                                    <button type="button" class="num-btn num-btn-js" value=".">.</button>
+
+                                                    <button type="button" class="num-btn num-btn-js zero-btn" value="0">0</button>
+
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- Calculator Module Section -->
                     </div>
                 </div>
             </section>
         </main>
+        <footer>
+            <section>
+                <p>Handmade by Zach Bayoff.</p>
+            </section>
+        </footer>
     </div>
 <script type="text/javascript" src="bundle.js"></script></body>
 
