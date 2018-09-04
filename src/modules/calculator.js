@@ -41,6 +41,8 @@ export default class CalculatorApp {
 
     handleNumbers(val) {
 
+
+
         // if previous operator was equal, reset calculation
         if (this.previousOperator === 'equal') {
             this.firstNum = '0';
@@ -52,19 +54,36 @@ export default class CalculatorApp {
         // check if operator has been selected
         if (this.operator === null) {
             // assign target number to firstNum
-            if (this.numDigits(this.firstNum) > 8) {
+            if (this.numDigits(this.firstNum) > 11) {
                 return;
             }
+
+            // check if decimal has been clicked, prevent multiple decimal points
+            if (val === '.') {
+                if (String(this.firstNum).includes('.')) {
+                    return;
+                }
+            }
+
             this.firstNum += val;
             // remove leading zeroes
             this.firstNum = this.removeLeadingZero(this.firstNum);
             // display in text area
             this.displayAnswer(this.firstNum);
         } else {
+
             // assign target number to firstNum
-            if (this.numDigits(this.secondNum) > 8) {
+            if (this.numDigits(this.secondNum) > 11) {
                 return;
             }
+
+            // check if decimal has been clicked, prevent multiple decimal points
+            if (val === '.') {
+                if (String(this.secondNum).includes('.')) {
+                    return;
+                }
+            }
+
             this.secondNum += val;
             // remove leading zeroes
             this.secondNum = this.removeLeadingZero(this.secondNum);
@@ -129,23 +148,23 @@ export default class CalculatorApp {
         // switch on operation string, call proper function with appropriate values
         switch (op) {
             case 'add':
-                this.answer = this.cleanse(this.add(Number(x), Number(y)));
-                this.displayAnswer(this.answer);
+                this.answer = this.add(Number(x), Number(y));
+                this.displayAnswer(this.cleanse(this.answer));
                 // console.log('Computed answer is: ' + this.answer);
                 break;
             case 'subtract':
                 this.answer = this.subtract(Number(x), Number(y));
-                this.displayAnswer(this.answer);
+                this.displayAnswer(this.cleanse(this.answer));
                 // console.log('Computed answer is: ' + this.answer);
                 break;
             case 'multiply':
                 this.answer = this.multiply(Number(x), Number(y));
-                this.displayAnswer(this.answer);
+                this.displayAnswer(this.cleanse(this.answer));
                 // console.log('Computed answer is: ' + this.answer);
                 break;
             case 'divide':
                 this.answer = this.divide(Number(x), Number(y));
-                this.displayAnswer(this.answer);
+                this.displayAnswer(this.cleanse(this.answer));
                 // console.log('Computed answer is: ' + this.answer);
                 break;
             default:
@@ -155,16 +174,26 @@ export default class CalculatorApp {
 
     // check size of number, if floating point, precision, rounding
     cleanse(num) {
-
-        // check if floating point
+        // console.log(num);
+        // check if number is integer
         if (this.isInt(num)) {
+            // console.log(this.numDigits(num))
+            if (this.numDigits(num) > 20) {
+                // console.log((num.toExponential(5)));
+                return (num.toExponential(5));
+            }
+            return num;
+        } else { // is floating point
 
-            if (this.numDigits(num) > 8) {
+            num = +num.toFixed(5);
+            // console.log(num);
 
+            if (this.numDigits(num) > 20) {
+                // console.log((num.toExponential(5)));
+                // console.log('yes')
+                return (num.toExponential(5));
             }
 
-            return num;
-        } else {
             return num;
         }
 
@@ -181,8 +210,9 @@ export default class CalculatorApp {
         let numDigits = 0;
         if (typeof num === 'string') {
             numDigits = num.length;
+            // console.log(num);
         } else {
-            numDigits = toString(num).length;
+            numDigits = num.toString().length;
         }
 
         return numDigits;

@@ -131,7 +131,17 @@ describe('CalculatorApp', () => {
         calculator.handleOperators('add');
         calculator.handleNumbers(300);
         calculator.handleEvaluation();
-        expect(calculator.answer).to.equal(1.52407e12);
+        expect(calculator.answer).to.equal(12345 * 123456789 + 300);
+    });
+
+    it('correctly passes click sequence: 554.556 * 333.545 / 55 = 3363.07965', () => {
+        calculator.handleNumbers(554.556);
+        calculator.handleOperators('multiply');
+        calculator.handleNumbers(333.545);
+        calculator.handleOperators('divide');
+        calculator.handleNumbers(55);
+        calculator.handleEvaluation();
+        expect(calculator.answer).to.equal(554.556 * 333.545 / 55);
     });
 
 });
