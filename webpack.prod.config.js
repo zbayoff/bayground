@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: './src/app.js',
+    entry: ['babel-polyfill', './src/app.js'],
     mode: 'production',
     output: {
         library: 'UserList',
