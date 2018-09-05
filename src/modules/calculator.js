@@ -219,6 +219,12 @@ export default class CalculatorApp {
     displayAnswer(value) {
         this.displayArea.innerHTML = '';
         this.displayArea.innerHTML = value;
+        // change font size based on value's number of digits
+        if (this.numDigits(value) > 10) {
+            this.displayArea.style.fontSize = '1.2rem';
+        } else {
+            this.displayArea.style.fontSize = '2rem';
+        }
     }
 
     // Clear display area

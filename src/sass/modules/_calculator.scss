@@ -13,12 +13,16 @@ $key-border-radius: 10px;
     max-width: 300px;
     margin: 0 auto;
     padding: 1rem; // border: 2px solid black;
-    border-radius: 5px;
+    border-radius: 15px;
     background-color: #FFDF00;
     box-shadow: 0 2px 4px black;
     button {
         height: 50px;
         font-size: 1.5rem;
+        touch-action: manipulation;
+        background-color: rgb(221, 221, 221);
+        border: none;
+        box-shadow: 0 4px 4px black;
     }
     .display-area {
         // grid-column: 5 / 1;
@@ -33,12 +37,13 @@ $key-border-radius: 10px;
         border-radius: $key-border-radius;
         font-size: 2rem;
         padding: 0 0.5rem 0 0;
-        margin: 0 0 5px 0;
+        margin: 0 0 10px 0;
+        overflow: hidden;
     }
     .calculator-keys {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 5px;
+        grid-gap: 10px;
         button:focus {
             outline: none;
         }
@@ -46,6 +51,12 @@ $key-border-radius: 10px;
             cursor: pointer;
             border: 0.5px solid grey;
         }
+
+        button:active {
+            box-shadow: 0 3px black;
+            transform: translateY(2px);
+        }
+
         .num-btn {
             border-radius: $key-border-radius;
         }
