@@ -1,0 +1,45 @@
+.word-input-js {}
+
+.definition-results-loader-js {
+    display: none;
+    width: 100%;
+    text-align: center;
+
+    img {
+        text-align: center;
+        margin: 0 auto;
+        width: 150px;
+    }
+}
+
+.definition {
+    cursor: pointer;
+    display: flex;
+    border: 1px solid transparent;
+    background: #eee;
+
+    padding: 0.5rem;
+    line-height: 1.75;
+
+    .plus-icon {
+        font-size: 1.5rem;
+        display: none;
+        justify-content: flex-end;
+        align-items: center;
+        align-content: center;
+        margin-left: auto;
+        padding: 0 0 0 1rem;
+    }
+
+    &:hover {
+        background: #e1e1e1;
+        border: 1px solid black;
+        border-radius: 5px;
+
+        .plus-icon {
+            display: inline-flex;
+        }
+    }
+
+
+}
