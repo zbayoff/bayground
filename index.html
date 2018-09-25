@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave+Display" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alef|Reem+Kufi" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115178608-1"></script>
@@ -275,13 +278,43 @@
                             </div>
                         </section>
                         <!-- Calculator Module Section -->
+                        <section class="project-dictionary">
+                            <div class="module-item">
+                                <h3 class="module-title">Dictionary</h3>
+                            </div>
+                            <div class="modal">
+                                <div class="modal-column">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <span class="close close-js">&times;</span>
+                                            <h2>Dictionary</h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Enter a word you would like to define. Find your list of words saved, so that they still remain even after you close the browser.</h3>
+                                            <form class="dictionary-form">
+                                                <input type="text" class="word-input-js">
+                                            </form>
+
+                                            <div class="definition-results-container-js">
+
+                                            </div>
+                                            <div class="definition-results-loader-js">
+                                                <img src="assets/img/hangman/Rolling-1s-200px.gif">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- Dictionary Module Section -->
                     </div>
                 </div>
             </section>
         </main>
         <footer>
             <section>
-                <p>Handmade by Zach Bayoff.</p>
+                <p><script>document.write((new Date()).getFullYear())</script> Built with Vanilla JavaScript.</p>
             </section>
         </footer>
     </div>
