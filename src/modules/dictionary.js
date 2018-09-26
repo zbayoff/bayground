@@ -8,6 +8,7 @@ const DictionaryModule = (function () {
     const definitionResultsLoader = document.querySelector('.definition-results-loader-js');
     const definitionListContainer = document.querySelector('.definition-list-js');
     const clearAllDefinitionsAllBtn = document.querySelector('.clear-definitions-all-js');
+    const spanClose = document.querySelector(".project-dictionary .close-js");
 
     let wordResults = [];
     let wordList = [];
@@ -23,7 +24,8 @@ const DictionaryModule = (function () {
     definitionResultsContainer.addEventListener('click', addDefinitiontoLocalStorage);
     definitionListContainer.addEventListener('click', removeDefinitionfromLocalStorage);
     dictionaryForm.addEventListener('submit', getDefinition);
-    clearAllDefinitionsAllBtn.addEventListener('click', removeAllDefinitionsfromLocalStorage)
+    clearAllDefinitionsAllBtn.addEventListener('click', removeAllDefinitionsfromLocalStorage);
+    spanClose.addEventListener('click', clearInput);
 
     function SelectedWord(word, partOfSpeech, definition) {
 
@@ -118,13 +120,20 @@ const DictionaryModule = (function () {
 
             let selectWord = new SelectedWord(word, e.target.getAttribute('data-word-partofspeech'), e.target.textContent);
 
-            wordList = JSON.parse(localStorage.getItem('definitions'));
+            if (JSON.parse(localStorage.getItem('definitions'))) {
+                wordList = JSON.parse(localStorage.getItem('definitions'));
+            } else {
+                localStorage.setItem('definitions', JSON.stringify(wordList));
+                wordList = JSON.parse(localStorage.getItem('definitions'));
+            }
+
             wordList.push(selectWord);
             localStorage.setItem('definitions', JSON.stringify(wordList));
             displayLocalStorage();
             // console.log(document.querySelector('.definition-list-js').lastElementChild);
             // scrollTo(document.querySelector('.definition-list-js').lastElementChild);
-            scrollTo(document.querySelector('.modal'));
+            // scrollTo(document.querySelector('.modal-content'));
+            scrollTo(document.querySelector('.definition-list-js').lastElementChild, document.querySelector('.definition-list-js').lastElementChild.offsetTop);
         }
     }
 
@@ -143,36 +152,56 @@ const DictionaryModule = (function () {
         }
     }
 
+    function removeAllDefinitionsfromLocalStorage() {
+        if (JSON.parse(localStorage.getItem('definitions')) && JSON.parse(localStorage.getItem('definitions')).length !== 0) {
+            if (confirm('Are you sure you want to delete all definitions?')) {
+                wordList = [];
+                localStorage.setItem('definitions', JSON.stringify(wordList));
+                displayLocalStorage();
+            }
+        }
+
+    }
+
     function displayLocalStorage() {
+        console.log(JSON.parse(localStorage.getItem('definitions')));
         definitionListContainer.innerHTML = '';
-        definitionListContainer.innerHTML +=
-            `
+        if (JSON.parse(localStorage.getItem('definitions')) && JSON.parse(localStorage.getItem('definitions')).length !== 0) {
+            definitionListContainer.innerHTML +=
+                `
         ${JSON.parse(localStorage.getItem('definitions')).map((item, index) => {
             return `<p class="definition-saved-js" data-word-id="${index}"><span>${index + 1}. </span>${item.word}, [${item.partOfSpeech}] -  ${item.definition}<span class="trash-icon fas fa-trash-alt"></span></p>`
         }).join('')}
-        `
-
-
-    }
-
-    function removeAllDefinitionsfromLocalStorage() {
-        if (confirm('Are you sure you want to delete all definitions?')) {
-            wordList = [];
-            localStorage.setItem('definitions', JSON.stringify(wordList));
-            displayLocalStorage();
+        `;
+        } else {
+            // console.log('yes');
+            definitionListContainer.innerHTML += `<p>You have not saved any word definitions.</p>`
         }
+
+
+
     }
+
+
 
     displayLocalStorage();
 
 
 
-
+    function scrollIt(element) {
+        document.querySelector('.project-dictionary .modal-content').scrollTo({
+            'behavior': 'smooth',
+            'left': 0,
+            'top': element.offsetTop
+        });
+    }
 
 
     function scrollTo(element, to = 0, duration = 1000) {
-        console.log(element);
-        const start = element.scrollTop;
+
+
+        const start = document.querySelector('.project-dictionary .modal-content').scrollTop;
+
         const change = to - start;
         const increment = 20;
         let currentTime = 0;
@@ -183,7 +212,7 @@ const DictionaryModule = (function () {
 
             const val = Math.easeInOutQuad(currentTime, start, change, duration);
 
-            element.scrollTop = val;
+            document.querySelector('.project-dictionary .modal-content').scrollTop = val;
 
             if (currentTime < duration) {
                 setTimeout(animateScroll, increment);
@@ -200,6 +229,13 @@ const DictionaryModule = (function () {
         t--;
         return -c / 2 * (t * (t - 2) - 1) + b;
     };
+
+    function clearInput() {
+        wordInput.value = '';
+        wordList = [];
+        definitionResultsContainer.innerHTML = '';
+
+    }
 
 
 
