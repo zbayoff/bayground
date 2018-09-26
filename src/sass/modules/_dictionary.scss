@@ -40,6 +40,38 @@
             display: inline-flex;
         }
     }
+}
 
+.definition-list-js {
+    border-top: 2px solid black;
+}
 
+.definition-saved-js {
+    cursor: pointer;
+    display: flex;
+    border: 1px solid transparent;
+    background: #eee;
+
+    padding: 0.5rem;
+    line-height: 1.75;
+
+    .trash-icon {
+        font-size: 1.5rem;
+        display: none;
+        justify-content: flex-end;
+        align-items: center;
+        align-content: center;
+        margin-left: auto;
+        padding: 0 0 0 1rem;
+    }
+
+    &:hover {
+        background: #e1e1e1;
+        border: 1px solid black;
+        border-radius: 5px;
+
+        .trash-icon {
+            display: inline-flex;
+        }
+    }
 }

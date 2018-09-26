@@ -17,7 +17,7 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '',
     },
-    // devtool: 'inline-source-map',
+    devtool: 'cheap-module-eval-source-map',
     module: {
         rules: [{
                 test: /\.js$/,
@@ -81,6 +81,6 @@ module.exports = {
             from: 'src/assets',
             to: 'assets'
         }]),
-        new webpack.SourceMapDevToolPlugin({})
+        // new webpack.SourceMapDevToolPlugin({})
     ]
 };
