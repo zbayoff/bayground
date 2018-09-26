@@ -1,6 +1,6 @@
 # The Bayground
 
-The Bayground is a collection of mini apps and games that were written in JavaScript using features of the latest ECMAScript 2015 specification.
+The Bayground is a collection of mini apps and games written in Vanilla JavaScript using features from the latest ECMAScript 2015 specification.
 
 The purpose of this site was to practice and become accostomed to writing and implementing these modern JavaScript features.
 Such features include the awesome Higher Order Functions like map, filter, and reduce, fat arrow functions, the new 'Class' syntax, const and let for variable declarations, 'use strict' mode, and much more.  
